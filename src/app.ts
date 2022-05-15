@@ -50,7 +50,6 @@ function createSpinnerElement(id: string) {
 
 // state
 let isDeathLoading = false;
-const isRecoveredLoading = false;
 
 // api
 function fetchCovidSummary(): Promise<AxiosResponse<CovidSummaryResponse>> {
@@ -190,10 +189,8 @@ async function setupData() {
   setLastUpdatedTimestamp(data);
 }
 
-function renderChart(data: any, labels: any) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const ctx = $("#lineChart").getContext("2d");
+function renderChart(data: number[], labels: string[]) {
+  const ctx = ($("#lineChart") as HTMLCanvasElement).getContext("2d");
   Chart.defaults.color = "#f5eaea";
   // Chart.defaults.font.family = 'Exo 2';
   new Chart(ctx, {
