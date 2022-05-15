@@ -15,18 +15,21 @@ import {
 } from "./def-types/index";
 
 // utils
-function $(selector: string) {
-  return document.querySelector(selector);
+function $<T extends HTMLElement = HTMLElement>(selector: string) {
+  // 타입도 파라미터로 받되, default HTMLElement 정의
+  // 소스마다 null 체크, 타입 단언할 필요 없음
+  const val = document.querySelector(selector);
+  return val as T;
 }
 function getUnixTimestamp(date: Date | string) {
   return new Date(date).getTime();
 }
 
 // DOM
-const confirmedTotal = $(".confirmed-total") as HTMLElement;
-const deathsTotal = $(".deaths") as HTMLElement;
-const recoveredTotal = $(".recovered") as HTMLElement;
-const lastUpdatedTime = $(".last-updated-time") as HTMLElement;
+const confirmedTotal = $(".confirmed-total");
+const deathsTotal = $(".deaths");
+const recoveredTotal = $(".recovered");
+const lastUpdatedTime = $(".last-updated-time");
 const rankList = $(".rank-list");
 const deathsList = $(".deaths-list");
 const recoveredList = $(".recovered-list");
@@ -137,12 +140,11 @@ function setDeathsList(data: CountrySummeryResponse) {
     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
     li.appendChild(span);
     li.appendChild(p);
-    deathsList?.appendChild(li); // deathsList!.appendChild(li); // 비권장
+    deathsList.appendChild(li);
   });
 }
 
 function clearDeathList() {
-  if (!deathsList) return false;
   deathsList.innerHTML = "";
 }
 
@@ -165,12 +167,11 @@ function setRecoveredList(data: CountrySummeryResponse) {
     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
     li.appendChild(span);
     li.appendChild(p);
-    recoveredList?.appendChild(li); // optional chaning operator
+    recoveredList.appendChild(li);
   });
 }
 
 function clearRecoveredList() {
-  if (!recoveredList) return false;
   recoveredList.innerHTML = "";
 }
 
@@ -179,13 +180,13 @@ function setTotalRecoveredByCountry(data: CountrySummeryResponse) {
 }
 
 function startLoadingAnimation() {
-  deathsList?.appendChild(deathSpinner); // optional chaning operator
-  recoveredList?.appendChild(recoveredSpinner); // optional chaning operator
+  deathsList.appendChild(deathSpinner);
+  recoveredList.appendChild(recoveredSpinner);
 }
 
 function endLoadingAnimation() {
-  deathsList?.removeChild(deathSpinner); // optional chaning operator
-  recoveredList?.removeChild(recoveredSpinner); // optional chaning operator
+  deathsList.removeChild(deathSpinner);
+  recoveredList.removeChild(recoveredSpinner);
 }
 
 async function setupData() {
@@ -268,7 +269,7 @@ function setCountryRanksByConfirmedCases(data: CovidSummaryResponse) {
     p.textContent = value.Country;
     li.appendChild(span);
     li.appendChild(p);
-    rankList?.appendChild(li);
+    rankList.appendChild(li);
   });
 }
 
