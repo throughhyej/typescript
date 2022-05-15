@@ -1,7 +1,6 @@
 # typescript
 https://www.inflearn.com/course/타입스크립트-실전
-
-# typescript
+https://github.com/joshua1988/learn-typescript/tree/master/setup
 
 ## Project setup
 ```

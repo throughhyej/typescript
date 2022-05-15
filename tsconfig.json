@@ -3,7 +3,7 @@
     "target": "ES5",
     "module": "esnext",
     "strict": false,
-    // "noImplicitAny": true,
+    "noImplicitAny": true,
     "jsx": "preserve",
     "moduleResolution": "node",
     "skipLibCheck": true,
