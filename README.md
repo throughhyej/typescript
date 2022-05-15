@@ -29,7 +29,7 @@ https://www.typescriptlang.org/dt/search?search=
     (https://www.typescriptlang.org/dt/search?search=)
     타입 정의된 lib의 경우, 설치 및 import
         - npm i axios
-        - npm i chart.js
+        - npm i chart.js@^2.9.4
         - npm i -D @types/chart.js
     타입 정의되지 않은 lib의 경우,
         1. tsconfig.json > "compilerOptions" > "typeRoots": ["./node_modules/@types", "./types"] 추가
