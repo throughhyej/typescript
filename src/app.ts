@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+// 2022.05.15 기준 ts에 적용할 수 있게 업데이트되어 있음
+// import * as  Chart from 'chart.js';
+import Chart from 'chart.js';
+
 // utils
 function $(selector: string) {
   return document.querySelector(selector);
