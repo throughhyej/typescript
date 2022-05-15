@@ -58,7 +58,7 @@ function fetchCovidSummary(): Promise<AxiosResponse<CovidSummaryResponse>> {
 }
 
 function fetchCountryInfo(
-  countryCode: string,
+  countryCode: string | undefined,
   status: COVID_STATUS
 ): Promise<AxiosResponse<CountrySummeryResponse>> {
   // params: confirmed, recovered, deaths
@@ -74,16 +74,19 @@ export function startApp() {
 
 // events
 function initEvents() {
+  if (!rankList) return false;
   rankList.addEventListener("click", handleListClick);
 }
 
-async function handleListClick(event: MouseEvent) {
+async function handleListClick(event: Event) {
   let selectedId;
   if (
     event.target instanceof HTMLParagraphElement ||
     event.target instanceof HTMLSpanElement
   ) {
-    selectedId = event.target.parentElement.id;
+    selectedId = event.target.parentElement
+      ? event.target.parentElement.id
+      : undefined;
   }
   if (event.target instanceof HTMLLIElement) {
     selectedId = event.target.id;
@@ -134,12 +137,13 @@ function setDeathsList(data: CountrySummeryResponse) {
     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
     li.appendChild(span);
     li.appendChild(p);
-    deathsList.appendChild(li);
+    deathsList?.appendChild(li); // deathsList!.appendChild(li); // 비권장
   });
 }
 
 function clearDeathList() {
-  deathsList.innerHTML = null;
+  if (!deathsList) return false;
+  deathsList.innerHTML = "";
 }
 
 function setTotalDeathsByCountry(data: CountrySummeryResponse) {
@@ -161,12 +165,13 @@ function setRecoveredList(data: CountrySummeryResponse) {
     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
     li.appendChild(span);
     li.appendChild(p);
-    recoveredList.appendChild(li);
+    recoveredList?.appendChild(li); // optional chaning operator
   });
 }
 
 function clearRecoveredList() {
-  recoveredList.innerHTML = null;
+  if (!recoveredList) return false;
+  recoveredList.innerHTML = "";
 }
 
 function setTotalRecoveredByCountry(data: CountrySummeryResponse) {
@@ -174,13 +179,13 @@ function setTotalRecoveredByCountry(data: CountrySummeryResponse) {
 }
 
 function startLoadingAnimation() {
-  deathsList.appendChild(deathSpinner);
-  recoveredList.appendChild(recoveredSpinner);
+  deathsList?.appendChild(deathSpinner); // optional chaning operator
+  recoveredList?.appendChild(recoveredSpinner); // optional chaning operator
 }
 
 function endLoadingAnimation() {
-  deathsList.removeChild(deathSpinner);
-  recoveredList.removeChild(recoveredSpinner);
+  deathsList?.removeChild(deathSpinner); // optional chaning operator
+  recoveredList?.removeChild(recoveredSpinner); // optional chaning operator
 }
 
 async function setupData() {
@@ -196,6 +201,7 @@ function renderChart(data: number[], labels: string[]) {
   const ctx = ($("#lineChart") as HTMLCanvasElement).getContext("2d");
   Chart.defaults.color = "#f5eaea";
   // Chart.defaults.font.family = 'Exo 2';
+  if (!ctx) return false;
   new Chart(ctx, {
     type: "line",
     data: {
@@ -262,7 +268,7 @@ function setCountryRanksByConfirmedCases(data: CovidSummaryResponse) {
     p.textContent = value.Country;
     li.appendChild(span);
     li.appendChild(p);
-    rankList.appendChild(li);
+    rankList?.appendChild(li);
   });
 }
 

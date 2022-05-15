@@ -36,6 +36,15 @@ https://www.typescriptlang.org/dt/search?search=
         2. 1depth에 types 폴더 생성 > types 하위에 lib 이름으로 파일 생성
         3. 2 하위에 index.d.ts 파일 생성
         4. declare module 'chart.js'; 입력
+5. strict 옵션 추가
+    tsconfig.json > "compilerOptions" > "strict": true
+    설정 시, 아래 항목들도 true가 됨
+    - "strictNullChecks": true,
+    - "strictFunctionTypes": true,
+    - "strictBindCallApply": true,
+    - "strictPropertyInitialization": true,
+    - "noImplicitThis": true,
+    - "alwaysStrict": true,
 
 ## Project setup
 ```

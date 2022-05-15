@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES5",
     "module": "esnext",
-    "strict": false,
+    "strict": true,
     "noImplicitAny": true,
     "jsx": "preserve",
     "moduleResolution": "node",
