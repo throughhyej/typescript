@@ -95,14 +95,17 @@ async function handleListClick(event: MouseEvent) {
   clearRecoveredList();
   startLoadingAnimation();
   isDeathLoading = true;
+  // destructuring 문법 (deathResponse)
   const { data: deathResponse } = await fetchCountryInfo(
     selectedId,
     COVID_STATUS.DEATHS
   );
+  // destructuring 문법 (recoveredResponse)
   const { data: recoveredResponse } = await fetchCountryInfo(
     selectedId,
     COVID_STATUS.RECOVERD
   );
+  // destructuring 문법 (confirmedResponse)
   const { data: confirmedResponse } = await fetchCountryInfo(
     selectedId,
     COVID_STATUS.CONFIRMED
