@@ -1,23 +1,23 @@
 // utils
-function $(selector: any) {
+function $(selector: string) {
   return document.querySelector(selector);
 }
-function getUnixTimestamp(date: any) {
+function getUnixTimestamp(date: Date) {
   return new Date(date).getTime();
 }
 
 // DOM
-const confirmedTotal = $('.confirmed-total');
-const deathsTotal = $('.deaths');
-const recoveredTotal = $('.recovered');
-const lastUpdatedTime = $('.last-updated-time');
+const confirmedTotal = $('.confirmed-total') as HTMLElement;
+const deathsTotal = $('.deaths') as HTMLElement;
+const recoveredTotal = $('.recovered') as HTMLElement;
+const lastUpdatedTime = $('.last-updated-time') as HTMLElement;
 const rankList = $('.rank-list');
 const deathsList = $('.deaths-list');
 const recoveredList = $('.recovered-list');
 const deathSpinner = createSpinnerElement('deaths-spinner');
 const recoveredSpinner = createSpinnerElement('recovered-spinner');
 
-function createSpinnerElement(id: any) {
+function createSpinnerElement(id: string) {
   const wrapperDiv = document.createElement('div');
   wrapperDiv.setAttribute('id', id);
   wrapperDiv.setAttribute(
@@ -42,14 +42,19 @@ function fetchCovidSummary() {
   return axios.get(url);
 }
 
-function fetchCountryInfo(countryCode: any, status: any) {
+enum COVID_STATUS {
+  CONFIRMED = 'confirmed',
+  RECOVERD = 'recoverds',
+  DEATHS = 'deaths',
+}
+function fetchCountryInfo(countryCode: string, status: COVID_STATUS) {
   // params: confirmed, recovered, deaths
   const url = `https://api.covid19api.com/country/${countryCode}/status/${status}`;
   return axios.get(url);
 }
 
 // methods
-function startApp() {
+export function startApp() {
   setupData();
   initEvents();
 }
@@ -77,14 +82,17 @@ async function handleListClick(event: any) {
   clearRecoveredList();
   startLoadingAnimation();
   isDeathLoading = true;
-  const { data: deathResponse } = await fetchCountryInfo(selectedId, 'deaths');
+  const { data: deathResponse } = await fetchCountryInfo(
+    selectedId,
+    COVID_STATUS.DEATHS
+  );
   const { data: recoveredResponse } = await fetchCountryInfo(
     selectedId,
-    'recovered'
+    COVID_STATUS.RECOVERD
   );
   const { data: confirmedResponse } = await fetchCountryInfo(
     selectedId,
-    'confirmed'
+    COVID_STATUS.CONFIRMED
   );
   endLoadingAnimation();
   setDeathsList(deathResponse);
@@ -123,7 +131,7 @@ function setTotalDeathsByCountry(data: any) {
 
 function setRecoveredList(data: any) {
   const sorted = data.sort(
-    (a, b) => getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date)
+    (a: any, b: any) => getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date)
   );
   sorted.forEach((value: any) => {
     const li = document.createElement('li');
@@ -242,4 +250,4 @@ function setLastUpdatedTimestamp(data: any) {
   lastUpdatedTime.innerText = new Date(data.Date).toLocaleString();
 }
 
-startApp();
+// startApp();
