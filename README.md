@@ -1,8 +1,8 @@
 # typescript
-https://www.inflearn.com/course/타입스크립트-실전
-https://github.com/joshua1988/learn-typescript/tree/master/setup
+https://www.inflearn.com/course/타입스크립트-실전  
+https://github.com/joshua1988/learn-typescript/tree/master/setup  
 
-타입 정의된 open lib 검색
+타입 정의된 open lib 검색  
 https://www.typescriptlang.org/dt/search?search=
 
 - 강의: npm init -y, npm i -D typescript 등등 통해 프로젝트 구성
